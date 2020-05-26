@@ -1,0 +1,16 @@
+// Ch8drill.1
+// use.cpp
+//
+
+
+#include "my.h"
+#include <iostream>
+
+
+int foo = 7;
+
+int main()
+{
+    print_foo();
+    print(99);
+}
