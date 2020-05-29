@@ -66,7 +66,6 @@ void Name_pairs::sort()
     vector<string> copy_name = name;
     vector<double> copy_age;
     
-    sort(copy_name);
     for(int i = 0; i<copy_name.size(); ++i) {
         
     }
