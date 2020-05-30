@@ -15,6 +15,8 @@
  */
 
 #include "std_lib_facilities.h"
+#include <algorithm>
+#include <utility>
 
 
 class Name_pairs {
@@ -23,19 +25,14 @@ public:
     void read_ages();     // assigns each name an age
     // Name_pairs();   // default constructor
     Name_pairs();
-    void sort();
+    void groupsort();   // groups and sorts vector into pairs
     void print() const;
 private:
     vector<string> name{};
     vector<double> age{};
     const string end{"end"};
-    
+    vector< pair<string, double> > pairing;
 };
-
-//bool is_age(Name_pairs::read_ages() ages)
-//{
- //   if(
-//}
 
 void Name_pairs::read_names()
 {
@@ -60,22 +57,20 @@ void Name_pairs::read_ages()
 Name_pairs::Name_pairs()
 {}
 
-void Name_pairs::sort()
+void Name_pairs::groupsort()
 {
     if(name.size() != age.size()) error("Number of names not equal to number of ages.\n");
-    vector<string> copy_name = name;
-    vector<double> copy_age;
-    
-    for(int i = 0; i<copy_name.size(); ++i) {
-        
+    for (int i = 0; i < name.size(); ++i)
+        pairing.push_back( make_pair(name[i], age[i]) );
+    sort(pairing.begin(), pairing.end());
+    for(int i = 0; i < pairing.size(); ++i) {     // check pairing size
+        name[i] = pairing[i].first;
+        age[i] = pairing[i].second;
     }
-    
-    
 }
 
 void Name_pairs::print() const
 {
-    Name_pairs pair;
     if(name.size() != age.size()) error("Number of names not equal to number of ages.\n");
     for (int i = 0; i<name.size(); ++i)
         cout << name[i] << " " << age[i] << endl;
@@ -84,13 +79,14 @@ void Name_pairs::print() const
 int main()
 try
 {
-    Name_pairs pair{};
-    pair.read_names();
-    pair.read_ages();
-    pair.print();
-    pair.sort();
-    pair.print();   // reprint after sorting to check
-    
+    Name_pairs pairs{};
+    pairs.read_names();
+    pairs.read_ages();
+    std::cout << '\n' << "Pre-sorted pairs: \n";
+    pairs.print();
+    pairs.groupsort();
+    std:: cout << '\n' << "Post-sorted pairs: \n";
+    pairs.print();
     
     return 0;
 }
@@ -104,6 +100,5 @@ catch(...)
     cerr << "Unknown exception!!\n";
     return 2;
 }
-    
-// note:
-// dates are not completely accurate due to 31 day each month assumption
+
+
