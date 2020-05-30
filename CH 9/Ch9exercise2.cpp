@@ -11,7 +11,6 @@
   the name vector in alphabetical order and reorganizes the age vector to match.
   Implement all "operations" as member functions. Test the class (of course:
   test early and often)
-  
  */
 
 #include "std_lib_facilities.h"
