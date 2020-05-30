@@ -22,10 +22,9 @@ class Name_pairs {
 public:
     void read_names();   // take name inputs and store in vector
     void read_ages();     // assigns each name an age
-    // Name_pairs();   // default constructor
     Name_pairs();
-    void groupsort();   // groups and sorts vector into pairs
-    void print() const;
+    void groupsort();   // groups and sorts vector into pairs alphabetically
+    void print() const;     // prints pairs
 private:
     vector<string> name{};
     vector<double> age{};
@@ -37,7 +36,7 @@ void Name_pairs::read_names()
 {
     string names;
     std::cout << "Please enter names separated by new lines. Once done with names, please type end\n";
-    while(cin>>names && names != end) {
+    while(cin>>names && names != end) {     // reads names until 'end' is typed
         name.push_back(names);
     }
 }
@@ -60,11 +59,11 @@ void Name_pairs::groupsort()
 {
     if(name.size() != age.size()) error("Number of names not equal to number of ages.\n");
     for (int i = 0; i < name.size(); ++i)
-        pairing.push_back( make_pair(name[i], age[i]) );
+        pairing.push_back( make_pair(name[i], age[i]) );        // makes name & age pairing vector
     sort(pairing.begin(), pairing.end());
-    for(int i = 0; i < pairing.size(); ++i) {     // check pairing size
-        name[i] = pairing[i].first;
-        age[i] = pairing[i].second;
+    for(int i = 0; i < pairing.size(); ++i) {
+        name[i] = pairing[i].first;     // pushes sorted vector back into name
+        age[i] = pairing[i].second;     // pushes sorted vector back into age
     }
 }
 
