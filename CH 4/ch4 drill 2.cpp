@@ -5,7 +5,6 @@
 #include "std_lib_facilities.h"
 
 // enter two integers and spits integers back in increasing value until non-integer such as '|' is enterred.
-
 int main()
 {
     int x = 0;
@@ -20,6 +19,3 @@ int main()
     }
     return 0;
 }
-
-
-
