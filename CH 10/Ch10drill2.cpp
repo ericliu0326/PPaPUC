@@ -72,10 +72,6 @@ try
         }
     }
     
-    cout << "The points inputted are as follows:\n";
-    for (int i = 0; i<original_points.size(); ++i)
-        cout << original_points[i];
-    
     return 0;
 }
 catch(exception& e)
