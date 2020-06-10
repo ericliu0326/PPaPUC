@@ -1,16 +1,16 @@
-// Chapter 10 Drill 4
+// Chapter 10 Drill 6
 //
 
  /*
-  Open an ofstream and output each point to a file named mydata.txt
-  On Windows, we suggest the .txt suffix to make it easier to look
-  at the data with an ordinary text editor (such as WordPad)
+  Print the data elements from both vectors
  */
 
  /*
   Program can be significantly improved in regards to exception handling.
   Currently, inputs must be exactly in the '('double','')' format ex: (1,1)
   or else program will fail.
+  
+  Significant room in structure. Can split checking and verification into separate functions
  */
 
 #include "../std_lib_facilities.h"
@@ -39,11 +39,19 @@ istream& operator>>(istream& is, Point& a)
     double x {}, y{};
     char open_parenthesis, comma, closed_parenthesis;
     is >> open_parenthesis >> x >> comma >> y >> closed_parenthesis;
-    if (open_parenthesis != '(') error("bad format\n");    // fast initial
-    if (comma!=',' || closed_parenthesis!=')') {   // check format
-        error("bad format\n");
+    if (!is) return is;
+    if (open_parenthesis != '(' || comma!=',' || closed_parenthesis!=')') {   // check format
+        is.clear(ios_base::failbit);
+        return is;
     }
-    a = Point(x,y);
+    
+    // room for improvement: can add check for failbits
+    // aside from initial parenthesis, comma, and double check
+    else if (is.bad()) error("bad format");
+    else if (is.eof()) { }
+    else {
+        a = Point(x,y);
+    }
     return is;
 }
 
@@ -52,6 +60,15 @@ ostream& operator<<(ostream& os, const Point& a)
     return os << '(' << a.x()
                 << ',' << a.y()
                 << ')' << endl;
+}
+
+void fill_from_file(vector<Point>& points, const string& name)
+{
+    ifstream ist{name};
+    if (!ist) error("can't open input file ", name);
+
+    for (Point p; ist >> p;)
+        points.push_back(p);
 }
 
 constexpr int inputs_wanted {7};    // seeks 7 points
@@ -73,16 +90,36 @@ try
         }
     }
         
-    cout << "The points inputted are as follows:\n";
+    cout << "The points you inputted are as follows:\n";
     for (int i = 0; i<original_points.size(); ++i)
         cout << original_points[i];
     
-    cout << "Writing data points to file 'mydata.txt\n";
+    cout << "Writing data points to file 'mydata.txt\n" << endl;
     ofstream ost {"mydata.txt"};
-    if (!ost) error("can't open output file");
+    if (!ost) error("cannot open output file");
     for (Point a : original_points) {
         ost << a;
     }
+    
+    ost.close();
+    
+    cout << "Now saving file from mydata.txt into vector process_points.\n" << endl;
+    ifstream ist {"mydata.txt"};
+    if (!ist) error("cannot open input file");
+    
+    vector<Point> processed_points;
+    
+    for(Point a; ist >> a;) {
+        processed_points.push_back(a);
+    }
+    
+    cout << "The points saved in vector original_points are as follows:\n";
+    for (int i = 0; i<original_points.size(); ++i)
+    cout << original_points[i];
+    
+    cout << "The points saved in vector processed_points are as follows:\n";
+    for (int i = 0; i<processed_points.size(); ++i)
+        cout << processed_points[i];
     
     return 0;
 }
