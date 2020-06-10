@@ -6,7 +6,7 @@
   Begin by defining the data type Point that has two coordinate members x and y.
  */
 
-#include "std_lib_facilities.h"
+#include "../std_lib_facilities.h"
 
 
 class Point {
