@@ -34,17 +34,16 @@ Point::Point(double x, double y)
 Point::Point()
 : m_x{}, m_y{} { };
 
-istream& operator>>(istream& is, Point& p)
+istream& operator>>(istream& is, Point& a)
 {
-    double x, y;
-    char ch1, ch2, ch3;
-
-    is >> ch1 >> x >> ch2 >> y >> ch3;
-    if (is && ch1 == '(' && ch2 == ',' && ch3 == ')')
-        p = Point(x, y);
-    else
-        is.clear(ios_base::failbit);
-    
+    double x {}, y{};
+    char open_parenthesis, comma, closed_parenthesis;
+    is >> open_parenthesis >> x >> comma >> y >> closed_parenthesis;
+    if (open_parenthesis != '(') error("bad format\n");    // fast initial
+    if (comma!=',' || closed_parenthesis!=')') {   // check format
+        error("bad format\n");
+    }
+    a = Point(x,y);
     return is;
 }
 
@@ -53,15 +52,6 @@ ostream& operator<<(ostream& os, const Point& a)
     return os << '(' << a.x()
                 << ',' << a.y()
                 << ')' << endl;
-}
-
-void fill_from_file(vector<Point>& points, const string& name)
-{
-    ifstream ist{name};
-    if (!ist) error("can't open input file ", name);
-
-    for (Point p; ist >> p;)
-        points.push_back(p);
 }
 
 constexpr int inputs_wanted {7};    // seeks 7 points
@@ -91,21 +81,10 @@ try
     
     cout << "Writing data points to file 'mydata.txt\n";
     ofstream ost {"mydata.txt"};
-    if (!ost) error("cannot open output file");
+    if (!ost) error("can't open output file");
     for (Point a : original_points) {
         ost << a;
     }
-    
-    ost.close();
-    
-    cout << "Now saving file from mydata.txt into vector process_points.\n";
-    vector<Point> processed_points;
-    fill_from_file(processed_points, "mydata.txt");
-    
-//     test vector properly saved by printing out processed_points
-    cout << "The points inputted are as follows:\n";
-    for (int i = 0; i<processed_points.size(); ++i)
-        cout << processed_points[i];
     
     return 0;
 }
