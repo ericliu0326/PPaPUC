@@ -8,10 +8,6 @@
   concatenates the two files.
  */
 
-/* Comment: Currently program does not format data nor process whitespace.
- Combined file results in unformatted no whitespace new file.
- Will revist to develop formatted output file.
- */
 
 
 #include "../std_lib_facilities.h"
@@ -30,20 +26,20 @@ try
     ifstream ist {file1};
     if(!ist) error("Cannot open file1\n");
         
-    string contents {};
+    string contents {};     // store both files in string
     
     char c;
-    ist >> noskipws;
+    ist >> noskipws;    // reads whitespace and new lines
     while (ist >> c){
         if(ist.fail()) error("Failure to read inputs in file\n");   // throwing exception for fail-bit
-        if(ist.bad()) error("error - badbit\n");
+        if(ist.bad()) error("error - something went werong!\n");
         contents += c;
     }
 
     ifstream ist2 {file2};
     if(!ist2) error("Cannot open file2\n");
 
-    ist2 >> noskipws;
+    ist2 >> noskipws;       // reads whitespace and new lines
     while (ist2 >> c){
         if(ist2.fail()) error("Failure to read inputs in file\n");   // throwing exception for fail-bit
         if(ist2.bad()) error("error - badbit\n");
@@ -52,7 +48,7 @@ try
 
     cout << "Please provide the name of the file you would like to store the file in:\n";
     string ofile_name;
-    cin >> ofile_name;
+    cin >> ofile_name;      // name of file to be written in
     cout << "The contents of the previous 2 files provided will be stored in " << ofile_name << '\n';
     ofstream ost {ofile_name};
     ost << contents;
