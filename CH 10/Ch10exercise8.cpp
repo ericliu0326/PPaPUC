@@ -16,8 +16,6 @@
 
 #include "../std_lib_facilities.h"
 
-const string ofile_name {"otest.txt"};     // name of output file to be written
-
 int main()
 try
 {
@@ -34,21 +32,27 @@ try
         
     string contents {};
     
-    for (string s; ist >> s;) {
+    char c;
+    ist >> noskipws;
+    while (ist >> c){
         if(ist.fail()) error("Failure to read inputs in file\n");   // throwing exception for fail-bit
         if(ist.bad()) error("error - badbit\n");
-        contents += s;
-    }
-        
-    ifstream ist2 {file2};
-    if(!ist2) error("Cannot open file2\n");
-    
-    for (string s; ist2 >> s;) {
-        if(ist2.fail()) error("Failure to read inputs in file\n");   // throwing exception for fail-bit
-        if(ist2.bad()) error("error - badbit\n");
-        contents += s;
+        contents += c;
     }
 
+    ifstream ist2 {file2};
+    if(!ist2) error("Cannot open file2\n");
+
+    ist2 >> noskipws;
+    while (ist2 >> c){
+        if(ist2.fail()) error("Failure to read inputs in file\n");   // throwing exception for fail-bit
+        if(ist2.bad()) error("error - badbit\n");
+        contents += c;
+    }
+
+    cout << "Please provide the name of the file you would like to store the file in:\n";
+    string ofile_name;
+    cin >> ofile_name;
     cout << "The contents of the previous 2 files provided will be stored in " << ofile_name << '\n';
     ofstream ost {ofile_name};
     ost << contents;
