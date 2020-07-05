@@ -1,4 +1,4 @@
-// Chapter 18 Drill 3
+// Chapter 18 Drill Pt 1 - 3
 //
 
  /*
@@ -20,8 +20,8 @@
 
 #include "../std_lib_facilities.h"
 
-int j = 10;
-int ga[10] {1, 2, 4, 8, 16};
+int sz = 10;
+int ga[10] {1, 2, 4, 8, 16, 32, 64, 128, 256, 512};
 
 void f(int x[], int n)
 {
@@ -46,7 +46,7 @@ void f(int x[], int n)
     }
 
     p1 = p;    // reset p1 to original array position
-    i = 0;
+    int i = 0;
     while (i < n) {   // print all n elements in array
         if (i != n - 1) {
             std::cout << *p1 << ", ";
@@ -64,5 +64,5 @@ void f(int x[], int n)
 
 //int main()
 //{
-//    f(ga, j);
+//    f(ga, sz);
 //}

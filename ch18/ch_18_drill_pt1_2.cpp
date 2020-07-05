@@ -1,4 +1,4 @@
-// Chapter 18 Drill 2
+// Chapter 18 Drill Pt 1 - 2
 //
 
  /*
@@ -11,7 +11,7 @@
 
 #include "../std_lib_facilities.h"
 
-int ga[10] {1, 2, 4, 8, 16};
+int ga[10] {1, 2, 4, 8, 16, 32, 64, 128, 256, 512};
 
 void f(int i[], int n)
 {
