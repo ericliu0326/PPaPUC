@@ -26,7 +26,7 @@
 #include "../std_lib_facilities.h"
 
 const int sz =  10;
-int ga[sz] {1, 2, 4, 8, 16};
+int ga[sz] {1, 2, 4, 8, 16, 32, 64, 128, 256, 512};
 
 void f(int x[], int n)
 {
